@@ -34,9 +34,11 @@ public class Customer {
 	@Id //primary key
 	@GeneratedValue(strategy=GenerationType.AUTO)
 	private long custId;
+	
 	@OneToOne//(cascade=cascadeType)
 	@JoinColumn(name="accountNo")
 	private Account account;
+	
 	private String custName;
 	//@Temporal(TemporalType.DATE)
 	private LocalDate dob;

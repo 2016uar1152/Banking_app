@@ -9,17 +9,21 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.context.annotation.ComponentScan;
 
 import com.training.entity.Account;
+import com.training.entity.BankUser;
 import com.training.entity.Customer;
 import com.training.entity.Transaction;
 import com.training.repo.AccountRepo;
+import com.training.repo.BankUserRepo;
 import com.training.repo.CustomerRepo;
 import com.training.repo.TransactionRepo;
 import com.training.service.CustomerService;
 
 import springfox.documentation.swagger2.annotations.EnableSwagger2;
 
+@ComponentScan
 @EnableSwagger2
 @SpringBootApplication
 public class BankingAppApplication implements CommandLineRunner{
@@ -34,13 +38,15 @@ public class BankingAppApplication implements CommandLineRunner{
 	private TransactionRepo transactionRepo;
 	
 	@Autowired
+	private BankUserRepo bankUserRepo;
+	
+	@Autowired
 	private CustomerService cs;
 	
 	public static void main(String[] args) {
 		SpringApplication.run(BankingAppApplication.class, args);
 	}
 	
-	@SuppressWarnings("deprecation")
 	@PostConstruct
 	public void init() {
 		Account a1=new Account("SAV",97000.00,true);
@@ -61,6 +67,12 @@ public class BankingAppApplication implements CommandLineRunner{
 		transactionRepo.save(t1);
 		transactionRepo.save(t2);
 		transactionRepo.save(t3);
+		BankUser bu1= new BankUser("customer1", "customer123", true, "ROLE_CUSTOMER");
+		BankUser bu2= new BankUser("customer2", "customer123", true, "ROLE_CUSTOMER");
+		BankUser bu3= new BankUser("admin1", "admin123", true, "ROLE_ADMIN");
+		bankUserRepo.save(bu1);
+		bankUserRepo.save(bu2);
+		bankUserRepo.save(bu3);
 
 	}
 
@@ -73,7 +85,7 @@ public class BankingAppApplication implements CommandLineRunner{
 		System.out.println(cs.getCustomer(4));
 		System.out.println(cs.getAccountDetails(4));
 		System.out.println(cs.getBalance(4));
-		System.out.println(cs.viewTransaction( LocalDate.parse("2012-10-15"), LocalDate.parse("2015-08-17") ));
+		//System.out.println(cs.viewTransaction( LocalDate.parse("2012-10-15"), LocalDate.parse("2015-08-17") ));
 		
 		
 

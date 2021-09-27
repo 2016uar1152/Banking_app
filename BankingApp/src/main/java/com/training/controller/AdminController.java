@@ -12,7 +12,6 @@ import org.springframework.web.bind.annotation.RestController;
 import com.training.entity.Account;
 import com.training.entity.Customer;
 import com.training.service.AdminService;
-import com.training.service.CustomerService;
 
 @RestController
 @RequestMapping("/admin")
@@ -20,7 +19,7 @@ public class AdminController {
 	
 	@GetMapping("")
 	public String welcome() {
-		return "Hello Admin.";
+		return "Hello Admin :-)";
 	}
 
 	@Autowired
@@ -49,8 +48,8 @@ public class AdminController {
 		return adminService.updateCustomerPhone(custId,phoneNo);
 	}
 	@GetMapping("/update/account/{accountNo}/status/{status}")
-	public Account updateAccountStatus(@PathVariable("accountNo") long custId, @PathVariable("status") boolean status) {
-		return adminService.updateAccountStatus(custId,status);
+	public Account updateAccountStatus(@PathVariable("accountNo") long accountNo, @PathVariable("status") boolean status) {
+		return adminService.updateAccountStatus(accountNo,status);
 	}
 	
 	@PostMapping("/add/customer")
@@ -63,7 +62,8 @@ public class AdminController {
 		} catch (Exception e) {
 			e.printStackTrace();
 			return "Customer not added!!";
-		}		
+		}
+		
 	}
 	
 	

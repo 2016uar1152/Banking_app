@@ -55,8 +55,9 @@ public class CustomerService {
 		return getAccountDetails(custId).getBalance();		
 	}
 
-	public List<Transaction> viewTransaction(LocalDate startDate, LocalDate endDate) {
-		return transactionRepo.findByDateBetween(startDate, endDate);
+	public List<Transaction> viewTransaction(long custId, LocalDate startDate, LocalDate endDate) {
+		long accountNo= getAccountDetails(custId).getAccountNo();
+		return transactionRepo.findByDateBetween(startDate, endDate, accountNo,accountNo);
 	}
 	
 	public Transaction deposit(long custId, double amount) {
@@ -101,6 +102,7 @@ public class CustomerService {
 		Account toAccount = getAccount(toAccountNo);
 		
 		if(fromAccount.getBalance()>=amount) {
+			//before transaction value being saved to database
 			Transaction transaction=new Transaction();
 			transaction.setFromAccount(fromAccount);
 			transaction.setToAccount(toAccount);
@@ -108,10 +110,11 @@ public class CustomerService {
 			transaction.setDate(LocalDate.now());
 			transactionRepo.save(transaction);
 			
+			//transaction begins
 			fromAccount.setBalance( fromAccount.getBalance()-amount );
 			accountRepo.save(fromAccount);
 			
-			fromAccount.setBalance( toAccount.getBalance()+amount );
+			toAccount.setBalance( toAccount.getBalance()+amount );
 			accountRepo.save(toAccount);
 			return 	transaction;
 		}

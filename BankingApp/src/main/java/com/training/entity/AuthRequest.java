@@ -9,21 +9,21 @@ import lombok.Setter;
 @Data
 public class AuthRequest {
 	
-	private String custId;
+	private String username;
 	private String password;
 	public AuthRequest() {
 		super();
 	}
-	public AuthRequest(String custId, String password) {
+	public AuthRequest(String username, String password) {
 		super();
-		this.custId = custId;
+		this.username = username;
 		this.password = password;
 	}
-	public String getCustId() {
-		return custId;
+	public String getUsername() {
+		return username;
 	}
-	public void setCustId(String custId) {
-		this.custId = custId;
+	public void setUsername(String username) {
+		this.username = username;
 	}
 	public String getPassword() {
 		return password;

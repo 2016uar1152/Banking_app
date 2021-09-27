@@ -1,6 +1,7 @@
 package com.training.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.ComponentScan;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -13,42 +14,44 @@ import com.training.entity.AuthRequest;
 import com.training.util.JwtUtil;
 
 @RestController
-@RequestMapping("/")
+@RequestMapping("/bank")
 public class BankController {
-	
+
 	@GetMapping("")
 	public String welcomeEveryone() {
 		return "Welcome to MAP bank!!! ";
 	}
 	
-	@GetMapping("/customer")
-	public String sayHelloUser() {
-		return "Hello Customer";
-	}
 	
-	@GetMapping("/admin")
-	public String sayHelloAdmin() {
-		return "Hello Admin";
-	}
-	
+//	@GetMapping("/customer")
+//	public String sayHelloUser()
+//	{
+//		return "Hello Customer";
+//	}
+//	@GetMapping("/admin")
+//	public String sayHelloAdmin()
+//	{ 
+//		return "Hello Admin"; 
+//	}
+
 	@Autowired
 	private JwtUtil jwtUtil;
-	
+
 	@Autowired
 	private AuthenticationManager authenticationManager;
-	
-	@PostMapping("/authenticate")
-    public String generateToken(@RequestBody AuthRequest authRequest) throws Exception { //from json input
-        try {
-            authenticationManager.authenticate(
-                    new UsernamePasswordAuthenticationToken(authRequest.getCustId(), authRequest.getPassword())
-            );
-        } catch (Exception ex) {
-            throw new Exception("invalid custId/password");
-        }
 
-        return jwtUtil.generateToken(authRequest.getCustId());
-    }
-	
+	@PostMapping("/authenticate")
+	public String generateToken(@RequestBody AuthRequest authRequest) throws Exception { //from json input
+		try {
+			authenticationManager.authenticate(
+					new UsernamePasswordAuthenticationToken(authRequest.getUsername(), authRequest.getPassword())
+					);
+		} catch (Exception ex) {
+			throw new Exception("invalid username/password");
+		}
+
+		return jwtUtil.generateToken(authRequest.getUsername());
+	}
+
 
 }

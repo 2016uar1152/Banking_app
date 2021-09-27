@@ -1,5 +1,8 @@
 package com.training.controller;
 
+import java.time.LocalDate;
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -8,6 +11,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.training.entity.Account;
 import com.training.entity.Customer;
+import com.training.entity.Transaction;
 import com.training.service.CustomerService;
 
 @RestController
@@ -16,7 +20,7 @@ public class CustomerController {
 	
 	@GetMapping("")
 	public String welcome() {
-		return "Hello, Customer.";
+		return "Hello, Customer :-)";
 	}
 	
 	@Autowired
@@ -40,6 +44,29 @@ public class CustomerController {
 	{
 		return customerService.getBalance(custId);
 	}
-
+	
+	@GetMapping("/{custId}/deposit/{amount}")
+	public Transaction depositer(@PathVariable("custId") long custId, @PathVariable("amount") double amount)
+	{
+		return customerService.deposit(custId,amount);
+	}
+	
+	@GetMapping("/{custId}/withdraw/{amount}")
+	public Transaction withdrawer(@PathVariable("custId") long custId, @PathVariable("amount") double amount)
+	{
+		return customerService.withdraw(custId,amount);
+	}
+	
+	@GetMapping("/{custId}/transfer/{accountNo}/amount/{amount}")
+	public Transaction transferer(@PathVariable("custId") long custId, @PathVariable("accountNo") long accountNo, @PathVariable("amount") double amount)
+	{
+		return customerService.transfer(custId,accountNo,amount);
+	}
+	
+	@GetMapping("/{custId}/statement/from/{fromDate}/to/{toDate}")
+	public List<Transaction> statementViewer(@PathVariable("custId") long custId, @PathVariable("fromDate") LocalDate fromDate, @PathVariable("toDate") LocalDate toDate)
+	{
+		return customerService.viewTransaction(custId,fromDate,toDate);
+	}
 	
 }

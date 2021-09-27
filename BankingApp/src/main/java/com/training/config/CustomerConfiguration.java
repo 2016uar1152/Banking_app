@@ -31,15 +31,13 @@ public class CustomerConfiguration extends WebSecurityConfigurerAdapter{
 		return new PasswordEncoder()
 		{
 			@Override
-			public String encode(CharSequence userEntered) {
-				return userEntered.toString();
+			public String encode(CharSequence userEnteredPassword) {
+				return userEnteredPassword.toString();
 			}
 
 			@Override
-			public boolean matches(CharSequence userEntered, String password) {
-				System.out.println("Username Entered: "+userEntered);
-				System.out.println("Password Entered: "+password);
-				if(password.equals(userEntered))   
+			public boolean matches(CharSequence userEnteredPassword, String password) {
+				if(password.equals(userEnteredPassword))   
 					return true;
 				return false;
 			}
@@ -62,7 +60,7 @@ public class CustomerConfiguration extends WebSecurityConfigurerAdapter{
 		.csrf()
 		.disable()
 		.authorizeRequests()
-		.antMatchers("/authenticate")
+		.antMatchers("/bank/authenticate")
 		.permitAll()
 		.and()
 		.authorizeRequests()

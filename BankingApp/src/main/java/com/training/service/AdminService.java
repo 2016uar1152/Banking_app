@@ -38,11 +38,14 @@ public class AdminService {
 	}
 	
 	public String deleteCustomer(long custId)
-	{
-		if(getCustomer(custId) == null) 
+	{	Customer customer= getCustomer(custId);
+		if(customer == null) 
 			return "Account with account Id : "+custId+" does not exist";
-		accountRepo.deleteById(custId);
-		return "Account deleted";
+		
+		long accountNo= customer.getAccount().getAccountNo();
+		customerRepo.deleteById(custId);
+		deleteAccount(accountNo);
+		return "Customer deleted";
 	}
 	public String deleteAccount(long accountNo)
 	{
@@ -63,6 +66,7 @@ public class AdminService {
 	{	Account account = getAccount(accountNo);
 		if(account == null) return null;
 		account.setActive(status);
+		accountRepo.save(account);
 		return account;
 	}
 	
