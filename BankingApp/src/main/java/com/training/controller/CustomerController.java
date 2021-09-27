@@ -16,7 +16,7 @@ public class CustomerController {
 	
 	@GetMapping("")
 	public String welcome() {
-		return "Welcome, Customer to MAP Bank!!";
+		return "Hello, Customer.";
 	}
 	
 	@Autowired

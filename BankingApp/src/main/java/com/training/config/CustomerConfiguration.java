@@ -6,25 +6,21 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
+import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
+import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 
+import com.training.filters.JwtFilter;
+import com.training.service.BankUserDetailsService;
+
 
 @Configuration
-public class CustomerConfiguration {
+@EnableWebSecurity
+public class CustomerConfiguration extends WebSecurityConfigurerAdapter{
 
-
-
-
-
-
-
-
-
-
-
-	/* @Autowired 
-	private MyUserDetailsService userDetailsService;
+	@Autowired 
+	private BankUserDetailsService bankUserDetailsService;
 
 	@Autowired
 	private JwtFilter jwtFilter;
@@ -41,8 +37,8 @@ public class CustomerConfiguration {
 
 			@Override
 			public boolean matches(CharSequence userEntered, String password) {
-				System.out.println("UserEntered: "+userEntered);
-				System.out.println("password: "+password);
+				System.out.println("Username Entered: "+userEntered);
+				System.out.println("Password Entered: "+password);
 				if(password.equals(userEntered))   
 					return true;
 				return false;
@@ -54,7 +50,7 @@ public class CustomerConfiguration {
 	//authentication
 	@Override
 	public void configure(AuthenticationManagerBuilder auth) throws Exception {
-		auth.userDetailsService(userDetailsService)
+		auth.userDetailsService(bankUserDetailsService)
 		.passwordEncoder(passwordEncoder());
 	}
 
@@ -70,8 +66,8 @@ public class CustomerConfiguration {
 		.permitAll()
 		.and()
 		.authorizeRequests()
-		.antMatchers("/user/**")
-		.hasAnyRole("USER","ADMIN")
+		.antMatchers("/customer/**")
+		.hasAnyRole("CUSTOMER","ADMIN")
 		.and()
 		.authorizeRequests()
 		.antMatchers("/admin/**")
@@ -87,5 +83,5 @@ public class CustomerConfiguration {
 	@Override
 	public AuthenticationManager authenticationManagerBean() throws Exception {
 		return super.authenticationManagerBean();
-	}*/
+	}
 }

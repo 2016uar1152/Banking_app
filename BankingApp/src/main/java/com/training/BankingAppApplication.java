@@ -64,7 +64,6 @@ public class BankingAppApplication implements CommandLineRunner{
 
 	}
 
-	@SuppressWarnings("deprecation")
 	@Override
 	public void run(String... args) throws Exception {
 		System.out.println("I am in command line runner.");

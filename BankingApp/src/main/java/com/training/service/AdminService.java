@@ -24,12 +24,46 @@ public class AdminService {
 	@Autowired
 	private TransactionRepo transactionRepo;
 	
-	public Customer getCustomer(long id)
+	public Customer getCustomer(long custId)
 	{
-		Optional<Customer> opCustomer = customerRepo.findById(id);
-		if(opCustomer.isPresent())
-		return customerRepo.findById(id).get();
+		Optional<Customer> opCustomer = customerRepo.findById(custId);
+		if(opCustomer.isPresent()) return customerRepo.findById(custId).get();
 		return null;
+	}
+	public Account getAccount(long accountNo)
+	{
+		Optional<Account> opAccount = accountRepo.findById(accountNo);
+		if(opAccount.isPresent()) return accountRepo.findById(accountNo).get();
+		return null;
+	}
+	
+	public String deleteCustomer(long custId)
+	{
+		if(getCustomer(custId) == null) 
+			return "Account with account Id : "+custId+" does not exist";
+		accountRepo.deleteById(custId);
+		return "Account deleted";
+	}
+	public String deleteAccount(long accountNo)
+	{
+		if(getAccount(accountNo) == null)
+			return "Account with account Id : "+accountNo+" does not exist";
+		accountRepo.deleteById(accountNo);
+		return "Account deleted";
+	}
+	
+	public Customer updateCustomerPhone(long custId,String phone)
+	{	Customer customer=getCustomer(custId);
+		if(customer == null) return null;
+		customer.setMobileNo(phone);
+		customerRepo.save(customer);
+		return customer;
+	}
+	public Account updateAccountStatus(long accountNo, boolean status)
+	{	Account account = getAccount(accountNo);
+		if(account == null) return null;
+		account.setActive(status);
+		return account;
 	}
 	
 	public Customer createCustomer(String name,LocalDate dob, String mobileNo, String photo, String address, String type, double initAmount)
@@ -45,7 +79,6 @@ public class AdminService {
 		customerRepo.save(customer);
 		return customer;
 	}
-	
 	public Account createAccount(String type, double initAmount)
 	{
 		Account account= new Account();
@@ -56,28 +89,7 @@ public class AdminService {
 		return account;
 	}
 	
-	public Account getAccount(long accountNo)
-	{
-		Optional<Account> opAccount = accountRepo.findById(accountNo);
-		if(opAccount.isPresent()) return accountRepo.findById(accountNo).get();
-		return null;
-	}
 	
-	public String deleteAccount(long accountNo)
-	{
-		if(getAccount(accountNo) == null)
-			return "Account with account Id : "+accountNo+" does not exist";
-		accountRepo.deleteById(accountNo);
-		return "Account deleted";
-	}
-	
-	public Customer updateCustomer(long Id,String phone)
-	{	Customer customer=getCustomer(Id);
-		if(customer == null) return null;
-		customer.setMobileNo(phone);
-		customerRepo.save(customer);
-		return customer;
-	}
 	
 	
 }
