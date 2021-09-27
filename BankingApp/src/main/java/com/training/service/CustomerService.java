@@ -22,6 +22,7 @@ public class CustomerService {
 	@Autowired
 	private AccountRepo accountRepo;
 	
+	
 	public Account getAccount(long custId){
 		Optional<Account> opAccount=accountRepo.findById(custId);
 		Account account= opAccount.get();
