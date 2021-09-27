@@ -10,15 +10,22 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 
 
-
 @Configuration
 public class CustomerConfiguration {
-	
-	
-	
+
+
+
+
+
+
+
+
+
+
+
 	/* @Autowired 
 	private MyUserDetailsService userDetailsService;
-	
+
 	@Autowired
 	private JwtFilter jwtFilter;
 
@@ -72,7 +79,7 @@ public class CustomerConfiguration {
 		.anyRequest()
 		.authenticated()
 		;
-		
+
 		httpSecurity.addFilterBefore(jwtFilter, UsernamePasswordAuthenticationFilter.class);
 	}
 

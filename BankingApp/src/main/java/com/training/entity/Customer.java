@@ -1,5 +1,6 @@
 package com.training.entity;
 
+import java.time.LocalDate;
 import java.util.Date;
 
 import javax.persistence.Column;
@@ -21,11 +22,11 @@ import lombok.Setter;
 import lombok.ToString;
 
 
-//@AllArgsConstructor
-//@NoArgsConstructor
-//@Setter
-//@Getter
-//@ToString
+@AllArgsConstructor
+@NoArgsConstructor
+@Setter
+@Getter
+@ToString
 @Entity
 @Table(name="customer")
 public class Customer {
@@ -36,8 +37,8 @@ public class Customer {
 	@JoinColumn(name="accountNo")
 	private Account account;
 	private String custName;
-	@Temporal(TemporalType.DATE)
-	private Date dob;
+	//@Temporal(TemporalType.DATE)
+	private LocalDate dob;
 	@Column(name="mobileNo", length=10)
 	private String mobileNo;
 	private String photo;
@@ -45,7 +46,7 @@ public class Customer {
 	public Customer() {
 		super();
 	}
-	public Customer(long custId, Account account, String custName, Date dob, String mobileNo, String photo,
+	public Customer(long custId, Account account, String custName, LocalDate dob, String mobileNo, String photo,
 			String address) {
 		super();
 		this.custId = custId;
@@ -74,10 +75,10 @@ public class Customer {
 	public void setCustName(String custName) {
 		this.custName = custName;
 	}
-	public Date getDob() {
+	public LocalDate getDob() {
 		return dob;
 	}
-	public void setDob(Date dob) {
+	public void setDob(LocalDate dob) {
 		this.dob = dob;
 	}
 	public String getMobileNo() {

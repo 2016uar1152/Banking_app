@@ -14,11 +14,11 @@ import lombok.Setter;
 import lombok.ToString;
 
 
-//@AllArgsConstructor
-//@NoArgsConstructor
-//@Setter
-//@Getter
-//@ToString
+@AllArgsConstructor
+@NoArgsConstructor
+@Setter
+@Getter
+@ToString
 @Entity
 @Table(name="account")
 public class Account {
@@ -68,6 +68,7 @@ public class Account {
 		return "Account [accountNo=" + accountNo + ", type=" + type + ", balance=" + balance + ", isActive=" + isActive
 				+ "]";
 	}
+	
 	
 	
 	

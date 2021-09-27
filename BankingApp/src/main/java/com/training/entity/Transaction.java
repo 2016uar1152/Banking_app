@@ -1,5 +1,6 @@
 package com.training.entity;
 
+import java.time.LocalDate;
 import java.util.Date;
 
 import javax.persistence.Column;
@@ -20,11 +21,11 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.ToString;
 
-//@AllArgsConstructor
-//@NoArgsConstructor
-//@Setter
-//@Getter
-//@ToString
+@AllArgsConstructor
+@NoArgsConstructor
+@Setter
+@Getter
+@ToString
 @Entity
 @Table(name="transaction")
 public class Transaction {
@@ -41,22 +42,22 @@ public class Transaction {
 	@JoinColumn(name="toAccountNo")
 	private Account toAccount;
 
-	@Temporal(TemporalType.DATE)
-	private Date date;
+	//@Temporal(TemporalType.DATE)
+	private LocalDate date;
 	
 	private double amount;
 
-	public Transaction(long transId, Account fromAccount, Account toAccount, Date date, double amount) {
+	public Transaction() {
+		super();
+	}
+
+	public Transaction(long transId, Account fromAccount, Account toAccount, LocalDate date, double amount) {
 		super();
 		this.transId = transId;
 		this.fromAccount = fromAccount;
 		this.toAccount = toAccount;
 		this.date = date;
 		this.amount = amount;
-	}
-
-	public Transaction() {
-		super();
 	}
 
 	public long getTransId() {
@@ -83,11 +84,11 @@ public class Transaction {
 		this.toAccount = toAccount;
 	}
 
-	public Date getDate() {
+	public LocalDate getDate() {
 		return date;
 	}
 
-	public void setDate(Date date) {
+	public void setDate(LocalDate date) {
 		this.date = date;
 	}
 
