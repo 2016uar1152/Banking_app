@@ -32,6 +32,7 @@ import lombok.ToString;
 public class Customer {
 
 	@Id //primary key
+	@GeneratedValue(strategy=GenerationType.AUTO)
 	private long custId;
 	@OneToOne//(cascade=cascadeType)
 	@JoinColumn(name="accountNo")
@@ -50,6 +51,16 @@ public class Customer {
 			String address) {
 		super();
 		this.custId = custId;
+		this.account = account;
+		this.custName = custName;
+		this.dob = dob;
+		this.mobileNo = mobileNo;
+		this.photo = photo;
+		this.address = address;
+	}
+	public Customer( Account account, String custName, LocalDate dob, String mobileNo, String photo,
+			String address) {
+		super();
 		this.account = account;
 		this.custName = custName;
 		this.dob = dob;

@@ -3,9 +3,12 @@ package com.training.entity;
 import java.util.Date;
 
 import javax.persistence.Entity;
-
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
+
+import org.springframework.beans.factory.annotation.Value;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -24,6 +27,7 @@ import lombok.ToString;
 public class Account {
 	
 	@Id //primary key
+	@GeneratedValue(strategy=GenerationType.AUTO)
 	private long accountNo;
 	
 	private String type;
@@ -35,6 +39,12 @@ public class Account {
 	public Account(long accountNo, String type, double balance, boolean isActive) {
 		super();
 		this.accountNo = accountNo;
+		this.type = type;
+		this.balance = balance;
+		this.isActive = isActive;
+	}
+	public Account( String type, double balance, boolean isActive) {
+		super();
 		this.type = type;
 		this.balance = balance;
 		this.isActive = isActive;

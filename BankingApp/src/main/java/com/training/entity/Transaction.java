@@ -59,6 +59,13 @@ public class Transaction {
 		this.date = date;
 		this.amount = amount;
 	}
+	public Transaction( Account fromAccount, Account toAccount, LocalDate date, double amount) {
+		super();
+		this.fromAccount = fromAccount;
+		this.toAccount = toAccount;
+		this.date = date;
+		this.amount = amount;
+	}
 
 	public long getTransId() {
 		return transId;

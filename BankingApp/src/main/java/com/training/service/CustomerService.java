@@ -39,6 +39,13 @@ public class CustomerService {
 		//if(opCustomer.isPresent()) System.out.println(customer);
 		return customer;
 	}
+	
+	public Account getAccount(long accountNo)
+	{
+		Optional<Account> opAccount = accountRepo.findById(accountNo);
+		Account account = opAccount.get();
+		return account;
+	}
 
 	public Account getAccountDetails(long custId){
 		return getCustomer(custId).getAccount();
@@ -50,6 +57,69 @@ public class CustomerService {
 
 	public List<Transaction> viewTransaction(LocalDate startDate, LocalDate endDate) {
 		return transactionRepo.findByDateBetween(startDate, endDate);
+	}
+	
+	public Transaction deposit(long custId, double amount) {
+		Account account = getAccountDetails(custId);
+		Transaction transaction=new Transaction();
+		
+		transaction.setFromAccount(account);
+		transaction.setToAccount(account);
+		transaction.setAmount(amount);
+		transaction.setDate(LocalDate.now());
+		
+		transactionRepo.save(transaction);
+		account.setBalance( account.getBalance()+amount );
+		accountRepo.save(account);
+		
+		return 	transaction;
+	}
+	
+	public Transaction withdraw(long custId, double amount) {
+		Account account = getAccountDetails(custId);
+		Transaction transaction=new Transaction();
+		if(account.getBalance()>=amount) {
+			transaction.setFromAccount(account);
+			transaction.setToAccount(account);
+			transaction.setAmount(-amount);
+			transaction.setDate(LocalDate.now());
+			transactionRepo.save(transaction);
+			
+			account.setBalance( account.getBalance()-amount );
+			accountRepo.save(account);
+			return 	transaction;
+		}
+		else {
+			System.out.println("Insufficient balance!!");
+			return null;
+		}
+		
+	}
+	
+	public Transaction transfer(long fromCustId, long toAccountNo, double amount) {
+		Account fromAccount = getAccountDetails(fromCustId);
+		Account toAccount = getAccount(toAccountNo);
+		
+		if(fromAccount.getBalance()>=amount) {
+			Transaction transaction=new Transaction();
+			transaction.setFromAccount(fromAccount);
+			transaction.setToAccount(toAccount);
+			transaction.setAmount(amount);
+			transaction.setDate(LocalDate.now());
+			transactionRepo.save(transaction);
+			
+			fromAccount.setBalance( fromAccount.getBalance()-amount );
+			accountRepo.save(fromAccount);
+			
+			fromAccount.setBalance( toAccount.getBalance()+amount );
+			accountRepo.save(toAccount);
+			return 	transaction;
+		}
+		else {
+			System.out.println("Insufficient balance!!");
+			return null;
+		}	
+		
 	}
 
 }
