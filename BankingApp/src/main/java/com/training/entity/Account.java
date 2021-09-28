@@ -17,8 +17,6 @@ import lombok.Setter;
 import lombok.ToString;
 
 
-@AllArgsConstructor
-@NoArgsConstructor
 @Setter
 @Getter
 @ToString
@@ -43,7 +41,7 @@ public class Account {
 		this.balance = balance;
 		this.isActive = isActive;
 	}
-	public Account( String type, double balance, boolean isActive) {
+	public Account(String type, double balance, boolean isActive) {
 		super();
 		this.type = type;
 		this.balance = balance;

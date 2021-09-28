@@ -54,16 +54,9 @@ public class AdminController {
 	
 	@PostMapping("/add/customer")
 	public String addCustomer(@RequestBody Customer customer) {
-		try {
-			adminService.createCustomer(customer.getCustName(), customer.getDob(),
-			  customer.getMobileNo(), customer.getPhoto(),customer.getAddress(),
-			  customer.getAccount().getType(), customer.getAccount().getBalance());
-			return "Customer added!!";
-		} catch (Exception e) {
-			e.printStackTrace();
-			return "Customer not added!!";
-		}
-		
+		try { adminService.createCustomer(customer);
+				return "Customer added!!";
+		} catch (Exception e) {return "Customer not added!!";}
 	}
 	
 	

@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.RestController;
 import com.training.entity.Account;
 import com.training.entity.Customer;
 import com.training.entity.Transaction;
+import com.training.service.BankUserDetailsService;
 import com.training.service.CustomerService;
 
 @RestController
@@ -70,6 +71,13 @@ public class CustomerController {
 		return customerService.viewTransaction(custId,LocalDate.parse(fromDate),LocalDate.parse(toDate));
 	}
 	
+	@Autowired
+	private BankUserDetailsService bankUserDetailsService;
 	
+	@GetMapping("/updatepassword/{username}/{oldPassword}/{newPassword}")
+	public String passwordUpdater(@PathVariable("username") String username, @PathVariable("oldPassword") String oldPassword,
+			@PathVariable("newPassword") String newPassword) {
+		return bankUserDetailsService.updatePassword(username,oldPassword,newPassword);
+	}
 	
 }

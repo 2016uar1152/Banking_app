@@ -70,26 +70,15 @@ public class AdminService {
 		return account;
 	}
 	
-	public Customer createCustomer(String name,LocalDate dob, String mobileNo, String photo, String address, String type, double initAmount)
+	public Customer createCustomer(Customer customer)
 	{	
-		Account account= createAccount(type,initAmount);
-		Customer customer= new Customer();
-		customer.setCustName(name);
-		customer.setDob(dob);
-		customer.setMobileNo(mobileNo);
-		customer.setPhoto(photo);
-		customer.setAddress(address);
-		customer.setAccount(account);
+		//Account account = createAccount(customer.getAccount());
+		//customer.setAccount(account);
 		customerRepo.save(customer);
 		return customer;
 	}
-	public Account createAccount(String type, double initAmount)
-	{
-		Account account= new Account();
-		account.setType(type);
-		account.setBalance(initAmount);
-		account.setActive(true);
-		accountRepo.save(account);
+	public Account createAccount(Account account)
+	{	accountRepo.save(account);
 		return account;
 	}
 	

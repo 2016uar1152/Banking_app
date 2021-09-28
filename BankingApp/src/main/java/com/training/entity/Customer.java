@@ -22,8 +22,7 @@ import lombok.Setter;
 import lombok.ToString;
 
 
-@AllArgsConstructor
-@NoArgsConstructor
+
 @Setter
 @Getter
 @ToString
@@ -46,6 +45,8 @@ public class Customer {
 	private String mobileNo;
 	private String photo;
 	private String address;
+	//private String username;
+	
 	public Customer() {
 		super();
 	}
@@ -60,7 +61,7 @@ public class Customer {
 		this.photo = photo;
 		this.address = address;
 	}
-	public Customer( Account account, String custName, LocalDate dob, String mobileNo, String photo,
+	public Customer(Account account, String custName, LocalDate dob, String mobileNo, String photo,
 			String address) {
 		super();
 		this.account = account;

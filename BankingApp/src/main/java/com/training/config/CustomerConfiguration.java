@@ -8,6 +8,7 @@ import org.springframework.security.config.annotation.authentication.builders.Au
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 
@@ -27,17 +28,18 @@ public class CustomerConfiguration extends WebSecurityConfigurerAdapter{
 
 	@Bean
 	public PasswordEncoder passwordEncoder() {
-
+		BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
 		return new PasswordEncoder()
 		{
 			@Override
 			public String encode(CharSequence userEnteredPassword) {
-				return userEnteredPassword.toString();
+		        String hashedPassword = passwordEncoder.encode(userEnteredPassword);
+				return hashedPassword;
 			}
 
 			@Override
 			public boolean matches(CharSequence userEnteredPassword, String password) {
-				if(password.equals(userEnteredPassword))   
+				if(passwordEncoder.matches(userEnteredPassword, password))   
 					return true;
 				return false;
 			}
