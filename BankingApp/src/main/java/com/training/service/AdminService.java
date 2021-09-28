@@ -72,8 +72,8 @@ public class AdminService {
 	
 	public Customer createCustomer(Customer customer)
 	{	
-		//Account account = createAccount(customer.getAccount());
-		//customer.setAccount(account);
+		Account account = createAccount(customer.getAccount());
+		customer.setAccount(account);
 		customerRepo.save(customer);
 		return customer;
 	}

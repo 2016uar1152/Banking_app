@@ -62,7 +62,7 @@ public class CustomerConfiguration extends WebSecurityConfigurerAdapter{
 		.csrf()
 		.disable()
 		.authorizeRequests()
-		.antMatchers("/bank/authenticate")
+		.antMatchers("/bank/login")
 		.permitAll()
 		.and()
 		.authorizeRequests()

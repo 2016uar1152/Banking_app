@@ -1,7 +1,6 @@
 package com.training;
 
 import java.time.LocalDate;
-import java.util.Date;
 
 import javax.annotation.PostConstruct;
 
@@ -9,6 +8,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.boot.context.properties.EnableConfigurationProperties;
+import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 
@@ -21,12 +22,15 @@ import com.training.repo.BankUserRepo;
 import com.training.repo.CustomerRepo;
 import com.training.repo.TransactionRepo;
 import com.training.service.CustomerService;
+import com.training.uploadingfiles.storage.StorageProperties;
+import com.training.uploadingfiles.storage.StorageService;
 
 import springfox.documentation.swagger2.annotations.EnableSwagger2;
 
 @ComponentScan
 @EnableSwagger2
 @SpringBootApplication
+@EnableConfigurationProperties(StorageProperties.class)
 public class BankingAppApplication implements CommandLineRunner{
 	
 	@Autowired
@@ -68,7 +72,7 @@ public class BankingAppApplication implements CommandLineRunner{
 		transactionRepo.save(t1);
 		transactionRepo.save(t2);
 		transactionRepo.save(t3);
-		
+
 		String customerPassword = new BCryptPasswordEncoder().encode("customer123");
 		String adminPassword = new BCryptPasswordEncoder().encode("admin123");
 		BankUser bu1= new BankUser("customer1", customerPassword, true, "ROLE_CUSTOMER");
@@ -77,9 +81,8 @@ public class BankingAppApplication implements CommandLineRunner{
 		bankUserRepo.save(bu1);
 		bankUserRepo.save(bu2);
 		bankUserRepo.save(bu3);
-
 	}
-
+	
 	@Override
 	public void run(String... args) throws Exception {
 		System.out.println("I am in command line runner.");
@@ -91,8 +94,15 @@ public class BankingAppApplication implements CommandLineRunner{
 		System.out.println(cs.getBalance(4));
 		//System.out.println(cs.viewTransaction( LocalDate.parse("2012-10-15"), LocalDate.parse("2015-08-17") ));
 		
-		
 
+	}
+	
+	@Bean
+	CommandLineRunner init(StorageService storageService) {
+		return (args) -> {
+			storageService.deleteAll();
+			storageService.init();
+		};
 	}
 
 }

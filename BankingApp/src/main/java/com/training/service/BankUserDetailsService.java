@@ -29,7 +29,6 @@ public class BankUserDetailsService implements UserDetailsService {
 
 	@Override
 	public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-		//System.out.println("Username Entered: "+ username);
 		BankUser bankUser=null;
 		Optional<BankUser> opBankUser =bankUserRepo.findById(username);
 		if(opBankUser.isPresent()) {
@@ -59,23 +58,18 @@ public class BankUserDetailsService implements UserDetailsService {
 		else {return "User doesn't exists/ invalid username.";}
 	}
 	
-//	public String forgotPassword(String username, String mobileNo, String newPassword) {
-//		newPassword = passwordEncoder.encode(newPassword);
-//		
-//		BankUser bankUser=null;
-//		Optional<BankUser> opBankUser =bankUserRepo.findById(username);
-//		if(opBankUser.isPresent())
-//		{	
-//			bankUser=opBankUser.get();
-//			if( (bankUser.getMobileNo()).equals(mobileNo) )
-//			{	bankUser.setPassword(newPassword);
-//				bankUserRepo.save(bankUser);
-//				return "Password Updated Successfully.";
-//			}
-//			else return "Mobile verification failed.";
-//		}
-//		else return "User doesn't exists/ invalid username.";
-//	}
+	public String forgotPassword(String username, String newPassword) {
+		BankUser bankUser=null;
+		Optional<BankUser> opBankUser =bankUserRepo.findById(username);
+		if(opBankUser.isPresent())
+		{	bankUser=opBankUser.get();
+			newPassword = passwordEncoder().encode(newPassword);
+			bankUser.setPassword(newPassword);
+			bankUserRepo.save(bankUser);
+			return "Password Updated Successfully.";
+		}
+		else return "User doesn't exists/ invalid username.";
+	}
 	
 	public PasswordEncoder passwordEncoder() {
 		BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
