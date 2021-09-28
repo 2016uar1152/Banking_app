@@ -10,7 +10,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.training.entity.AuthRequest;
+import com.training.bean.AuthRequest;
 import com.training.util.JwtUtil;
 
 @RestController

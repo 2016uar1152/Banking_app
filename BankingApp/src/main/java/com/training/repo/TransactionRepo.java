@@ -18,6 +18,7 @@ import com.training.entity.Transaction;
 @Repository
 public interface TransactionRepo extends JpaRepository<Transaction, Long> {
 	
-	@Query("from Transaction t where ((t.date >= :fromdate) and (t.date<= :todate)) and ( (t.from_account_no = :accno) or (t.to_account_no = :accountno) )")
-	List<Transaction> findByDateBetween(@Param("fromdate") LocalDate fromDate, @Param("todate") LocalDate toDate, @Param("accno") long accountNo1, @Param("accountno") long accountNo2);
+	@Query("from Transaction t where ((t.date >= :fromdate) and (t.date <= :todate)) and ((t.fromAccount = :fromaccountno) or (t.toAccount = :toaccountno))")
+	List<Transaction> findByDateBetween(@Param("fromdate") LocalDate fromDate, @Param("todate") LocalDate toDate, @Param("fromaccountno") Account fromAccountNo, @Param("toaccountno") Account toAccountNo);
+	
 }

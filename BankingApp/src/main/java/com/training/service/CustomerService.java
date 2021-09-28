@@ -56,8 +56,8 @@ public class CustomerService {
 	}
 
 	public List<Transaction> viewTransaction(long custId, LocalDate startDate, LocalDate endDate) {
-		long accountNo= getAccountDetails(custId).getAccountNo();
-		return transactionRepo.findByDateBetween(startDate, endDate, accountNo,accountNo);
+		Account account= getAccountDetails(custId);
+		return transactionRepo.findByDateBetween(startDate, endDate, account, account);
 	}
 	
 	public Transaction deposit(long custId, double amount) {

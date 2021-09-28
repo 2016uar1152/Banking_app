@@ -6,6 +6,7 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -64,9 +65,11 @@ public class CustomerController {
 	}
 	
 	@GetMapping("/{custId}/statement/from/{fromDate}/to/{toDate}")
-	public List<Transaction> statementViewer(@PathVariable("custId") long custId, @PathVariable("fromDate") LocalDate fromDate, @PathVariable("toDate") LocalDate toDate)
+	public List<Transaction> statementViewer(@PathVariable("custId") long custId, @PathVariable("fromDate") String fromDate, @PathVariable("toDate") String toDate)
 	{
-		return customerService.viewTransaction(custId,fromDate,toDate);
+		return customerService.viewTransaction(custId,LocalDate.parse(fromDate),LocalDate.parse(toDate));
 	}
+	
+	
 	
 }
